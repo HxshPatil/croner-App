@@ -1,0 +1,35 @@
+.calendar-wrapper
+  box-shadow: 0px 2px 8px 0px rgba(23, 43, 77, 0.2)
+  position: absolute
+  top: 100%
+  left: 0rem
+  z-index: 1
+.no-end-date-wrapper
+  display: flex
+  justify-content: space-between
+  padding: var(--padding-16) var(--padding-16)
+
+.no-end-date-wrapper > p
+  color: var(--color--black-light)
+
+.no-end-date-wrapper > input
+  width: 1.25rem
+  cursor: pointer
+
+.calendar-wrapper .is-end-date
+  opacity: 0.5
+  pointer-events: none
+
+.rdrDateRangePickerWrapper
+  box-shadow: 0px 2px 8px 0px rgba(23, 43, 77, 0.2)
+.rdrDateDisplayWrapper
+  background-color: transparent
+.rdrNextPrevButton
+  background-color: var(--color-white-faint)
+  box-shadow: 0px 1px 2px 0px rgba(23, 43, 77, 0.16)
+  border-radius: 100%
+  padding: var(--tight-spacing)
+
+.rdrDateDisplayWrapper,
+.rdrInputRanges
+  display: none

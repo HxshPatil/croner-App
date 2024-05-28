@@ -1,0 +1,13 @@
+<svg width="503" height="933" viewBox="0 0 503 933" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="503" height="446" fill="#F9FAFB"/>
+<rect y="462" width="503" height="148" fill="#F9FAFB"/>
+<rect x="17.6604" y="482.531" width="106.667" height="106.667" rx="13.3333" fill="#F2F4F7"/>
+<rect x="137.66" y="482.531" width="106.667" height="106.667" rx="13.3333" fill="#F2F4F7"/>
+<rect x="257.66" y="482.531" width="106.667" height="106.667" rx="13.3333" fill="#F2F4F7"/>
+<rect x="377.66" y="482.531" width="106.667" height="106.667" rx="13.3333" fill="#F2F4F7"/>
+<rect width="5.2575" height="107" rx="2.62875" transform="matrix(-1 0 0 1 502.918 482.531)" fill="#F2F4F7"/>
+<path d="M0 626H503V852.412C503 857.155 499.155 861 494.412 861H8.58759C3.8448 861 0 857.155 0 852.412V626Z" fill="#F9FAFB"/>
+<rect x="15.3792" y="634.15" width="166.667" height="226.85" rx="13.3333" fill="#F2F4F7"/>
+<rect x="195.379" y="634.15" width="166.667" height="226.85" rx="13.3333" fill="#F2F4F7"/>
+<path d="M375.379 647.484C375.379 640.12 381.349 634.15 388.712 634.15H502.379V861H388.712C381.349 861 375.379 855.031 375.379 847.667V647.484Z" fill="#F2F4F7"/>
+</svg>

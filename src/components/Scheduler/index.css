@@ -1,0 +1,13 @@
+.date-container{
+    display: flex;
+    gap: 20px;
+}
+
+.schedule-container{
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 300px;
+    width: 100vw;
+    /* padding: 40px; */
+}

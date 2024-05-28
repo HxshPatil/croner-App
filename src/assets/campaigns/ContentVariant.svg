@@ -1,0 +1,32 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_dd_2996_231791)">
+<g clip-path="url(#clip0_2996_231791)">
+<rect x="4" y="2" width="40" height="40" rx="20" fill="#F9F5FF"/>
+<g opacity="0.08">
+<rect x="4.27778" y="2.27778" width="39.4444" height="39.4444" rx="19.7222" stroke="#7F56D9" stroke-width="0.555556"/>
+</g>
+<path d="M22.9495 16.3232V28.4445H20.9963L15.2849 20.1881H15.1843V28.4445H12.9885V16.3232H14.9535L20.659 24.5856H20.7655V16.3232H22.9495ZM26.9637 16.3232L30.1183 25.864H30.2426L33.3913 16.3232H35.806L31.5328 28.4445H28.8221L24.5549 16.3232H26.9637Z" fill="#475467"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_dd_2996_231791" x="0.666667" y="0.888889" width="46.6667" height="46.6667" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1.11111" operator="erode" in="SourceAlpha" result="effect1_dropShadow_2996_231791"/>
+<feOffset dy="1.11111"/>
+<feGaussianBlur stdDeviation="1.11111"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0627451 0 0 0 0 0.0941176 0 0 0 0 0.156863 0 0 0 0.06 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2996_231791"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1.11111" operator="erode" in="SourceAlpha" result="effect2_dropShadow_2996_231791"/>
+<feOffset dy="2.22222"/>
+<feGaussianBlur stdDeviation="2.22222"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0627451 0 0 0 0 0.0941176 0 0 0 0 0.156863 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="effect1_dropShadow_2996_231791" result="effect2_dropShadow_2996_231791"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_2996_231791" result="shape"/>
+</filter>
+<clipPath id="clip0_2996_231791">
+<rect x="4" y="2" width="40" height="40" rx="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>
