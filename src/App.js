@@ -19,121 +19,119 @@ const formatDate = function (date, displayDate = true, displayMonth = true, disp
   const dateFormat = (displayMonth ? 'MMM' : '') + (displayDate ? ' DD' : '') + (displayYear ? ', YYYY' : '') + (displayTime ? ' hh:mm A' : '');
 
   if (date) {
-      const formattedDate = moment(date).format(dateFormat);
-      return formattedDate;
+    const formattedDate = moment(date).format(dateFormat);
+    return formattedDate;
   } else {
-      return "-";
+    return "-";
   }
 };
 
 function App() {
-  const [startDate, setStartDate] = useState(moment().format("MMM D YYYY"));
-  const [endDate, setEndDate] = useState(startDate);
-  const [startTime, setStartTime] = useState(moment().format("hh:mm A"));
-  const [endTime, setEndTime] = useState(moment().format("hh:mm A"));  
-  const [badge, setBadge] = useState("inactive");
-  const[isResumeVisible,setIsResumeVisible]= useState(false)
+  const [variants, setVariants] = useState([]);
 
-  const wholeStartDate = new Date(`${startDate} ${startTime}`);
-  const wholeEndDate = new Date(`${endDate} ${endTime}`);
-
-  const selectStartDate = (str) => {
-    const momentDate = moment(str);
-    const formattedDate = momentDate.format("MMM D YYYY");
-    setStartDate(formattedDate);
+  const addVariant = () => {
+    const newVariant = {
+      key: Date.now(),
+      startDate: moment().format("MMM D YYYY"),
+      endDate: moment().format("MMM D YYYY"),
+      startTime: moment().format("hh:mm A"),
+      endTime: moment().format("hh:mm A"),
+      badge: "inactive",
+      isResumeVisible: false,
+      startJob: null,
+      endJob: null
+    };
+    setVariants([...variants, newVariant]);
   };
 
-  const selectEndDate = (str) => {
-    const momentDate = moment(str);
-    const formattedDate = momentDate.format("MMM D YYYY");
-    setEndDate(formattedDate);
+  const updateVariant = (key, updatedProps) => {
+    setVariants(prevVariants => 
+      prevVariants.map(v => v.key === key ? { ...v, ...updatedProps } : v)
+    );
   };
 
-  const selectStartTime = (str) => {
-    setStartTime(str);
-  };
-
-  const selectEndTime = (str) => {
-    setEndTime(str);
-  };
-
-  const startCronJob = () => {
+  const startCronJob = (variant) => {
+    const { key, startDate, startTime, endDate, endTime } = variant;
     const currentDate = new Date();
     const wholeStartTime = new Date(`${startDate} ${startTime}`);
+    console.log('wholeStartTime:', wholeStartTime)
     const wholeEndTime = new Date(`${endDate} ${endTime}`);
-  
-    if (currentDate.getTime() < wholeStartTime.getTime()) {
-      setBadge("scheduled");
+    console.log('wholeEndTime:', wholeEndTime)
+
+    if (currentDate.getTime() < wholeStartTime.getTime() && wholeStartTime.getTime() < wholeEndTime.getTime()) {
+      updateVariant(key, { badge: "scheduled" });
     } else if (currentDate.getTime() >= wholeStartTime.getTime() && currentDate.getTime() < wholeEndTime.getTime()) {
-      setBadge("active");
-      setIsResumeVisible(true);
+      updateVariant(key, { badge: "active", isResumeVisible: true });
     } else {
-      setBadge("inactive");
-      setIsResumeVisible(false);
+      updateVariant(key, { badge: "inactive", isResumeVisible: false });
     }
-  
+
     const startCron = dateToCron(wholeStartTime);
     const endCron = dateToCron(wholeEndTime);
-  
+
     const startJob = Cron(startCron, () => {
-      console.log('Start Job');
-      setBadge("active");
-      setIsResumeVisible(true);
+      console.log(`Start Job for variant ${key}`);
+      updateVariant(key, { badge: "active", isResumeVisible: true });
       startJob.stop();
     });
-  
+
     const endJob = Cron(endCron, () => {
-      console.log('End Job');
-      setBadge("inactive");
-      setIsResumeVisible(false);
+      console.log(`End Job for variant ${key}`);
+      updateVariant(key, { badge: "inactive", isResumeVisible: false });
       endJob.stop();
     });
-  
+
     startJob.schedule();
     endJob.schedule();
-  };
-  
 
-  const updateEndTime = () => {
+    updateVariant(key, { startJob, endJob });
+  };
+
+  const updateEndTime = (variant) => {
+    const { key, startDate, startTime } = variant;
     const currentTime = new Date();
     const wholeStartTime = new Date(`${startDate} ${startTime}`);
-    
+
     if (currentTime < wholeStartTime) {
-      setBadge("scheduled");
+      updateVariant(key, { badge: "scheduled" });
     } else {
-      setBadge("inactive");
+      updateVariant(key, { badge: "inactive" });
     }
   };
 
-  const resumeJob = () => {
-    setBadge("active");
-    setIsResumeVisible(true);
+  const resumeJob = (variant) => {
+    const { key } = variant;
+    updateVariant(key, { badge: "active", isResumeVisible: true });
   };
-  
+
   return (
     <div className="App">
-      <Scheduler
-        startDate={startDate}
-        endDate={endDate}
-        selectStartDate={selectStartDate}
-        selectStartTime={selectStartTime}
-        selectEndDate={selectEndDate}
-        selectEndTime={selectEndTime}
-        startTime={startTime}
-        endTime={endTime}
-      />
-      <button onClick={startCronJob} className="start-button">Start</button>
-      <div className="row">
-        <div>variant1</div>
-        <div className="badge">{badge}</div>
-        <div>startDate: {formatDate(wholeStartDate.toString())}</div>
-        <div>endDate: {formatDate(wholeEndDate.toString())}</div>
-        {badge==="active" && <button onClick={updateEndTime}>End</button>}
-        {(badge === "inactive" && isResumeVisible) && <button onClick={resumeJob}>Resume</button>}
-      </div>
+      <button onClick={addVariant} className="add-variant-button">Add Variant</button>
+      {variants.map(variant => (
+        <div key={variant.key} className="variant">
+          <Scheduler
+            startDate={variant.startDate}
+            endDate={variant.endDate}
+            selectStartDate={(str) => updateVariant(variant.key, { startDate: moment(str).format("MMM D YYYY") })}
+            selectStartTime={(str) => updateVariant(variant.key, { startTime: str })}
+            selectEndDate={(str) => updateVariant(variant.key, { endDate: moment(str).format("MMM D YYYY") })}
+            selectEndTime={(str) => updateVariant(variant.key, { endTime: str })}
+            startTime={variant.startTime}
+            endTime={variant.endTime}
+          />
+          <button onClick={() => {startCronJob(variant);console.log(variant.key,)}} className="start-button">Start</button>
+          <div className="row">
+            <div>variant{variant.key}</div>
+            <div className="badge"><b>{variant.badge}</b></div>
+            <div><b>startDate:</b> {formatDate(new Date(`${variant.startDate} ${variant.startTime}`).toString())}</div>
+            <div><b>endDate:</b> {formatDate(new Date(`${variant.endDate} ${variant.endTime}`).toString())}</div>
+            {variant.badge === "active" && <button onClick={() => updateEndTime(variant)}>End</button>}
+            {(variant.badge === "inactive" && variant.isResumeVisible) && <button onClick={() => resumeJob(variant)}>Resume</button>}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
 
 export default App;
-
