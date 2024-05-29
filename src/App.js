@@ -51,6 +51,8 @@ function App() {
   };
 
   const startCronJob = (variant) => {
+    console.log('variant:', variant);
+
     const { key, startDate, startTime, endDate, endTime } = variant;
     const currentDate = new Date();
     const wholeStartTime = new Date(`${startDate} ${startTime}`);
@@ -58,13 +60,13 @@ function App() {
     const wholeEndTime = new Date(`${endDate} ${endTime}`);
     console.log('wholeEndTime:', wholeEndTime)
 
-    if (currentDate.getTime() < wholeStartTime.getTime() && wholeStartTime.getTime() < wholeEndTime.getTime()) {
-      updateVariant(key, { badge: "scheduled" });
-    } else if (currentDate.getTime() >= wholeStartTime.getTime() && currentDate.getTime() < wholeEndTime.getTime()) {
-      updateVariant(key, { badge: "active", isResumeVisible: true });
-    } else {
-      updateVariant(key, { badge: "inactive", isResumeVisible: false });
-    }
+    // if (currentDate.getTime() < wholeStartTime.getTime() && wholeStartTime.getTime() < wholeEndTime.getTime()) {
+    //   updateVariant(key, { badge: "scheduled" });
+    // } else if (currentDate.getTime() >= wholeStartTime.getTime() && currentDate.getTime() < wholeEndTime.getTime()) {
+    //   updateVariant(key, { badge: "active", isResumeVisible: true });
+    // } else {
+    //   updateVariant(key, { badge: "inactive", isResumeVisible: false });
+    // }
 
     const startCron = dateToCron(wholeStartTime);
     const endCron = dateToCron(wholeEndTime);
@@ -87,22 +89,22 @@ function App() {
     updateVariant(key, { startJob, endJob });
   };
 
-  const updateEndTime = (variant) => {
-    const { key, startDate, startTime } = variant;
-    const currentTime = new Date();
-    const wholeStartTime = new Date(`${startDate} ${startTime}`);
+  // const updateEndTime = (variant) => {
+  //   const { key, startDate, startTime } = variant;
+  //   const currentTime = new Date();
+  //   const wholeStartTime = new Date(`${startDate} ${startTime}`);
 
-    if (currentTime < wholeStartTime) {
-      updateVariant(key, { badge: "scheduled" });
-    } else {
-      updateVariant(key, { badge: "inactive" });
-    }
-  };
+  //   if (currentTime < wholeStartTime) {
+  //     updateVariant(key, { badge: "scheduled" });
+  //   } else {
+  //     updateVariant(key, { badge: "inactive" });
+  //   }
+  // };
 
-  const resumeJob = (variant) => {
-    const { key } = variant;
-    updateVariant(key, { badge: "active", isResumeVisible: true });
-  };
+  // const resumeJob = (variant) => {
+  //   const { key } = variant;
+  //   updateVariant(key, { badge: "active", isResumeVisible: true });
+  // };
 
   return (
     <div className="App">
@@ -119,14 +121,14 @@ function App() {
             startTime={variant.startTime}
             endTime={variant.endTime}
           />
-          <button onClick={() => {startCronJob(variant);console.log(variant.key,)}} className="start-button">Start</button>
+          <button onClick={() => {startCronJob(variant);console.log(variant.key)}} className="start-button">Start</button>
           <div className="row">
             <div>variant{variant.key}</div>
             <div className="badge"><b>{variant.badge}</b></div>
             <div><b>startDate:</b> {formatDate(new Date(`${variant.startDate} ${variant.startTime}`).toString())}</div>
             <div><b>endDate:</b> {formatDate(new Date(`${variant.endDate} ${variant.endTime}`).toString())}</div>
-            {variant.badge === "active" && <button onClick={() => updateEndTime(variant)}>End</button>}
-            {(variant.badge === "inactive" && variant.isResumeVisible) && <button onClick={() => resumeJob(variant)}>Resume</button>}
+            {/* {variant.badge === "active" && <button onClick={() => updateEndTime(variant)}>End</button>}
+            {(variant.badge === "inactive" && variant.isResumeVisible) && <button onClick={() => resumeJob(variant)}>Resume</button>} */}
           </div>
         </div>
       ))}
